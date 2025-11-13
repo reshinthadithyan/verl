@@ -47,10 +47,10 @@ python3 -m verl.trainer.main_ppo \
     actor_rollout_ref.ref.fsdp_config.param_offload=True \
     algorithm.use_kl_in_reward=False \
     reward_model.reward_manager=$REWARD_MANAGER \
-    reward_model.self_consistency_threshold=$SELF_CONSISTENCY_THRESHOLD \
-    reward_model.soft_reward=$SOFT_REWARD \
-    reward_model.remove_kl_loss_from_unlabeled_examples=$REMOVE_KL_LOSS_FROM_UNLABELLED_EXAMPLES \
-    reward_model.oversampling_keep_fraction=$OVERSAMPLING_KEEP_FRACTION \
+    reward_model.reward_kwargs.self_consistency_threshold=$SELF_CONSISTENCY_THRESHOLD \
+    reward_model.reward_kwargs.soft_reward=$SOFT_REWARD \
+    reward_model.reward_kwargs.remove_kl_loss_from_unlabeled_examples=$REMOVE_KL_LOSS_FROM_UNLABELLED_EXAMPLES \
+    reward_model.reward_kwargs.oversampling_keep_fraction=$OVERSAMPLING_KEEP_FRACTION \
     trainer.critic_warmup=0 \
     trainer.logger='["console","wandb"]' \
     trainer.project_name='verl_grpo_example_gsm8k' \

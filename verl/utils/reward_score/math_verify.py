@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+from verl.utils.reward_score.math import remove_boxed, last_boxed_only_string
 try:
     from math_verify.errors import TimeoutException
     from math_verify.metric import math_metric
@@ -37,3 +37,15 @@ def compute_score(model_output: str, ground_truth: str, timeout_score: float = 0
         ret_score = timeout_score
 
     return ret_score
+
+
+def extract_solution(solution_str: str) -> str:
+    solution_substr = last_boxed_only_string(solution_str)
+    if solution_substr is None:
+        return None
+    try:
+        box_removed = remove_boxed(solution_substr)
+    except:
+        box_removed = None
+
+    return box_removed
