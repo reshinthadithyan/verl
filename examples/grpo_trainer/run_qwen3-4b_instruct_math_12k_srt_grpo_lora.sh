@@ -22,7 +22,7 @@ python3 -m verl.trainer.main_ppo \
     data.filter_overlong_prompts=True \
     data.truncation='error' \
     data.shuffle=False \
-    actor_rollout_ref.model.path=Qwen/Qwen2.5-0.5B-Instruct \
+    actor_rollout_ref.model.path=Qwen/Qwen3-4B-Instruct-2507 \
     actor_rollout_ref.model.lora_rank=64 \
     actor_rollout_ref.model.lora_alpha=32 \
     actor_rollout_ref.actor.optim.lr=3e-6 \
@@ -55,10 +55,10 @@ python3 -m verl.trainer.main_ppo \
     trainer.critic_warmup=0 \
     trainer.logger='["console","wandb"]' \
     trainer.project_name='verl_grpo_example_gsm8k' \
-    trainer.experiment_name='qwen2.5_0.5b_grpo_lora' \
+    trainer.experiment_name='qwen3_4b_srt_grpo_math_12k_stage_1_lora_rollout_8_lora_64_32' \
     trainer.n_gpus_per_node=1 \
     trainer.nnodes=1 \
-    trainer.save_freq=20 \
+    trainer.save_freq=500 \
     trainer.test_freq=5 \
     trainer.total_epochs=15 $@
 

@@ -507,6 +507,7 @@ class SelfLearningRewardManager(AbstractRewardManager):
                 print("[prompt]", prompt_str)
                 print("[response]", response_str)
                 print("[ground_truth]", ground_truth)
+                print("[solution_hidden_during_training]", solution_hidden_during_training)
                 if isinstance(score, dict):
                     for key, value in score.items():
                         print(f"[{key}]", value)
@@ -518,7 +519,12 @@ class SelfLearningRewardManager(AbstractRewardManager):
                 data_source=data_source,
                 solution_str=response_str,
             )
-            gt_list.append(ground_truth)
+            
+            if ground_truth == GROUND_TRUTH_FOR_PROMPTS_THAT_NEED_TO_BE_SELF_LABELLED:
+                gt = solution_hidden_during_training
+            else:
+                gt = ground_truth
+            gt_list.append(gt)
             prompt_list.append(prompt_str)
             data_source_list.append(data_source)
             extracted_answer_list.append(extracted_answer)
