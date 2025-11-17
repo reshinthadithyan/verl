@@ -69,7 +69,8 @@ class Tracking:
             if config and config["trainer"].get("wandb_proxy", None):
                 settings = wandb.Settings(https_proxy=config["trainer"]["wandb_proxy"])
             entity = os.environ.get("WANDB_ENTITY", None)
-            wandb.init(project=project_name, name=experiment_name, entity=entity, config=config, settings=settings)
+            #TODO(reshinth): Bring back entity
+            wandb.init(project=project_name, name=experiment_name, config=config, entity=entity, settings=settings)
             self.logger["wandb"] = wandb
 
         if "trackio" in default_backend:
@@ -252,10 +253,12 @@ class _TensorboardAdapter:
 
         from torch.utils.tensorboard import SummaryWriter
 
-        tensorboard_dir = os.environ.get("TENSORBOARD_DIR", f"tensorboard_log/{project_name}/{experiment_name}")
-        os.makedirs(tensorboard_dir, exist_ok=True)
+        tensorboard_dir = os.environ.get("TENSORBOARD_DIR") #, f"tensorboard_log/{project_name}/{experiment_name}")
+        tensorboard_proj_dir = os.path.join(tensorboard_dir, project_name)
+        tensorboard_exp_dir = os.path.join(tensorboard_proj_dir, experiment_name)
+        os.makedirs(tensorboard_exp_dir, exist_ok=True)
         print(f"Saving tensorboard log to {tensorboard_dir}.")
-        self.writer = SummaryWriter(tensorboard_dir)
+        self.writer = SummaryWriter(tensorboard_exp_dir)
 
     def log(self, data, step):
         for key in data:
